@@ -173,14 +173,12 @@
           </v-expansion-panels>
 
 
-          <v-row class="d-flex justify-end align-center">
+          <v-row class="d-flex align-center">
             <v-col
-                class="d-flex justify-end"
                 cols="6"
             >
               <v-btn
-                  color='red'
-                  dark
+                  color='error'
                   width=100%
                   type="submit"
                   :disabled="invalid"
@@ -200,7 +198,6 @@
                 cols="6">
               <v-btn
                   color="success"
-                  dark
                   width=100%
                   type="submit"
                   :disabled="invalid"
