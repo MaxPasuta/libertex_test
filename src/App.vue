@@ -68,6 +68,7 @@
             </v-col>
             <v-col cols="4"
                    class="pa-1"
+                   style="color: #808080"
             >
               {{ `= $ ${form.sumInv * form.mult}` }}
             </v-col>
@@ -77,7 +78,7 @@
           <v-expansion-panels class="mb-5">
             <v-expansion-panel>
               <v-expansion-panel-header
-
+                  style="color: #808080"
               >
                 Ограничить прибыль и убытки
               </v-expansion-panel-header>
@@ -114,19 +115,21 @@
                 </v-row>
                 <v-row class="d-flex justify-start align-center">
                   <v-col
-                      class="d-flex justify-start pa-1"
+                      class="pa-1"
                       cols="6"
                   >
-                    <v-checkbox
-                        label="Прибыль"
-                        @change="$store.commit('setProfit', $event)"
-                    ></v-checkbox>
+                    <input
+                        type="checkbox"
+                        id="Profit"
+                        @change="$store.commit('setProfit', $event.target.checked)"
+                    >
+                    <label for="Profit" class="pa-1 ml-2">Прибыль</label>
                   </v-col>
                   <v-col
                       cols="6"
                       class="pa-1">
                     <ValidationProvider name="Profit" rules="Value_profit_lesion" v-slot="{ errors }">
-                      <div class="span_wrapper" v-if="errors[0]" style="top: 90px">
+                      <div class="span_wrapper" v-if="errors[0]" style="top: 75px">
                         <span>{{ errors[0] }}</span>
                       </div>
                       <my-input
@@ -141,21 +144,23 @@
                 </v-row>
 
 
-                <v-row class="d-flex justify-start align-center">
+                <v-row class="d-flex justify-start align-center mb-2">
                   <v-col
-                      class="d-flex justify-start pa-1"
+                      class="pa-1 "
                       cols="6"
                   >
-                    <v-checkbox
-                        label="Убыток"
-                        @change="$store.commit('setLesion', $event)"
-                    ></v-checkbox>
+                    <input
+                        type="checkbox"
+                        id="lesion"
+                        @change="$store.commit('setLesion', $event.target.checked)"
+                    >
+                    <label for="lesion" class="pa-1 ml-2">Убыток</label>
                   </v-col>
                   <v-col
                       cols="6"
                       class="pa-1">
-                    <ValidationProvider name="Lesion" rules="Value_profit_lesion|Value_lesion_max" v-slot="{ errors }">
-                      <div class="span_wrapper" v-if="errors[0]" style="top:170px">
+                    <ValidationProvider name="Lesion" rules="Value_profit_lesion|Value_lesion_max" changed v-slot="{ errors }">
+                      <div class="span_wrapper" v-if="errors[0]" style="top:110px">
                         <span>{{ errors[0] }}</span>
                       </div>
                       <my-input
@@ -251,6 +256,10 @@ export default {
       this.form.stopLoss = String(Math.ceil(newValue / 100 * 30))
     }
   },
+  mounted() {
+    this.form.takeProfit = String(Math.ceil(this.form.sumInv / 100 * 30))
+    this.form.stopLoss = String(Math.ceil(this.form.sumInv / 100 * 30))
+  },
   methods: {
     onSubmit() {
       if(!(this.$store.getters.getLesion)){
@@ -272,6 +281,9 @@ export default {
     },
     focusInput(focus) {
       this.focusMult = focus
+    },
+    changeRadio(){
+
     }
   }
 }
@@ -365,7 +377,11 @@ datalist {
   padding: 5px;
   z-index: 999;
 }
-
+#lesion, #Profit {
+  transform:scale(1.3);
+  opacity:0.9;
+  cursor:pointer;
+}
 
 </style>
 
